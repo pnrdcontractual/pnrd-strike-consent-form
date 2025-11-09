@@ -1,5 +1,5 @@
 // REPLACE_WITH_YOUR_GOOGLE_APPS_SCRIPT_URL
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx4LL551l8bUnykANPuSr5n3wVnwknSzQJnDEu8uWfVxsD_WMZgOPemYuT5xsPkuIUh/exec';
 
 // District-Block Mapping
 const districtBlocks = {
