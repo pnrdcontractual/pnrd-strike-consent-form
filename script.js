@@ -44,8 +44,7 @@ let employees = [];
 let currentSignatureFile = null;
 
 // Initialize
-document.addEventListener('47', function() {
-    populateDistricts();
+document.addEventListener('DOMContentLoaded', function() {    populateDistricts();
     setupFormHandlers();
     loadFromGoogleSheet();
     });
