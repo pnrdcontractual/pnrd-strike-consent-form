@@ -78,19 +78,28 @@ document.getElementById('district')?.addEventListener('change', function() {
     }
 });
 
-// Image Preview
-document.getElementById('signature')?.addEventListener('change', function(e) {
-    const file = e.target.files[0];
+// Handle Signature Upload from both inputs
+function handleSignatureUpload(input) {
+    const file = input.files[0];
     if(file) {
         currentSignatureFile = file;
         const reader = new FileReader();
         reader.onload = function(event) {
-            const preview = document.getElementById('imagePreview');
+            let preview = document.getElementById('imagePreview');
+            if (!preview) {
+                // Create preview div if it doesn't exist
+                const signatureDiv = input.parentElement;
+                preview = document.createElement('div');
+                preview.id = 'imagePreview';
+                preview.className = 'mt-2';
+                signatureDiv.appendChild(preview);
+            }
             preview.innerHTML = '<img src="' + event.target.result + '" alt="Signature Preview">';
         };
         reader.readAsDataURL(file);
     }
-});
+}
+
 
 // Setup Form Handlers
 function setupFormHandlers() {
