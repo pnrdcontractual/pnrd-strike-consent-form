@@ -94,8 +94,12 @@
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Signature (Camera)<span class="text-danger">*</span></label>
                     <div class="col-sm-9">
-                        <input type="file" id="signature" accept="image/*" capture="environment" class="form-control" required>
-                        <div id="imagePreview" class="mt-2"></div>
+                                                        <div class="btn-group mb-2" role="group">
+                                                                                                <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('fileInput').click()">📁 Choose File</button>
+                                    <button type="button" class="btn btn-outline-success" onclick="document.getElementById('cameraInput').click()">📷 Use Camera</button>
+                                </div>
+                                <input type="file" id="fileInput" accept="image/*" class="d-none" onchange="handleSignatureUpload(this)">
+                                <input type="file" id="cameraInput" accept="image/*" capture="environment" class="d-none" onchange="handleSignatureUpload(this)">
                     </div>
                 </div>
                 
