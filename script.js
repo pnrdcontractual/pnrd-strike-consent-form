@@ -44,12 +44,11 @@ let employees = [];
 let currentSignatureFile = null;
 
 // Initialize
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('47', function() {
     populateDistricts();
     setupFormHandlers();
-    loadEmployees();
-    updateSLNo();
-});
+    loadFromGoogleSheet();
+    });
 
 // Populate Districts
 function populateDistricts() {
