@@ -47,6 +47,7 @@ let currentSignatureFile = null;
 document.addEventListener('DOMContentLoaded', function() {    populateDistricts();
     setupFormHandlers();
     loadFromGoogleSheet();
+                                                              updateSLNo();
     });
 
 // Populate Districts
@@ -245,7 +246,4 @@ async function loadFromGoogleSheet() {
     }
 }
 
-// Load data when page loads
-window.addEventListener('DOMContentLoaded', () => {
-    loadFromGoogleSheet();
-});
+47
