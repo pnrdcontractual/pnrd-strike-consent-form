@@ -212,3 +212,33 @@ function displayRecords() {
     html += '</tbody></table>';
     container.innerHTML = html;
 }
+
+        // Fetch employee records from Google Sheet
+async function loadFromGoogleSheet() {
+    try {
+        const response = await fetch(GOOGLE_SCRIPT_URL + '?action=getData');
+        const data = await response.json();
+        
+        if (data.success && data.records) {
+            // Clear localStorage and replace with Sheet data
+            employees = data.records;
+            localStorage.setItem('employees', JSON.stringify(employees));
+            
+            // Update SL No to next number
+            const nextSLNo = employees.length + 1;
+            document.getElementById('slNo').value = nextSLNo;
+            
+            // Display the records
+            displayRecords();
+        }
+    } catch (error) {
+        console.error('Error loading from Google Sheet:', error);
+        // Fall back to localStorage if Sheet fetch fails
+        displayRecords();
+    }
+}
+
+// Load data when page loads
+window.addEventListener('DOMContentLoaded', () => {
+    loadFromGoogleSheet();
+});
