@@ -269,12 +269,26 @@ function applyFilters() {
     const container = document.getElementById('recordsTable');
     
     // Filter employees
-    const filtered = employees.filter(emp => {
-        const matchesSearch = !searchCode || emp.employeeId.toLowerCase().includes(searchCode);
-        const matchesDistrict = !filterDistrict || emp.district === filterDistrict;
-        const matchesBlock = !filterBlock || emp.block === filterBlock;
-        return matchesSearch && matchesDistrict && matchesBlock;
-    });
+    // Check if search is active
+        const isSearchActive = searchCode.length > 0;
+        const isFilterActive = filterDistrict || filterBlock;
+
+        const filtered = employees.filter(emp => {
+                    // If search is active, ONLY search by employee code
+                    if (isSearchActive) {
+                                    return emp.employeeId.toLowerCase().includes(searchCode);
+                                }
+
+                    // If district/block filters are active, apply them
+                    if (isFilterActive) {
+                                    const matchesDistrict = !filterDistrict || emp.district === filterDistrict;
+                                    const matchesBlock = !filterBlock || emp.block === filterBlock;
+                                    return matchesDistrict && matchesBlock;
+                                }
+
+                    // If no filters active, show all
+                    return true;
+
     
     if(filtered.length === 0) {
         container.innerHTML = '<p class="text-center text-muted">No records found</p>';
