@@ -47,7 +47,6 @@ let currentSignatureFile = null;
 document.addEventListener('DOMContentLoaded', function() {
     populateDistricts();
     setupFormHandlers();
-    loadEmployees();
     updateSLNo();
 });
 
