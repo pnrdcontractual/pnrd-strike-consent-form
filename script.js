@@ -218,7 +218,7 @@ async function loadFromGoogleSheet() {
         const response = await fetch(GOOGLE_SCRIPT_URL + '?action=getData');
         const data = await response.json();
         
-        if (data.success && data.records) {
+        if (data.status === 'success' && data.records) {
             // Clear localStorage and replace with Sheet data
             employees = data.records;
             localStorage.setItem('employees', JSON.stringify(employees));
