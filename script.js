@@ -4,6 +4,7 @@ const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx4LL551l8bUn
 
 // District-Block Mapping
 const districtBlocks = {
+    'N/A': ['N/A'],
     'BAJALI': ['BAJALI','BHAWANIPUR'],
     'BAKSA': ['Barama','Baska','Dhamdhama','Gobardhana(BTC)','Jalah(BTC)'],
     'BARPETA': ['CHAKCHAKA','CHENGA','GHILAJHARI-RUPSHI','GOBARDHANA','GOMAPHULBARI','KALGACHIA','MANDIA','PAKABETBARI','SARUKHETRI'],
