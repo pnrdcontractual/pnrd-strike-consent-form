@@ -226,69 +226,20 @@ function updateTotalConsent() {
     document.getElementById('totalConsent').textContent = total;
 }
 
-// Populate filter dropdowns with unique values
-function populateFilters() {
-    const districts = new Set();
-    const blocks = new Set();
-    
-    employees.forEach(emp => {
-        districts.add(emp.district);
-        blocks.add(emp.block);
-    });
-    
-    const districtSelect = document.getElementById('filterDistrict');
-    const blockSelect = document.getElementById('filterBlock');
-    
-    // Clear existing options except "All"
-    districtSelect.innerHTML = '<option value="">All Districts</option>';
-    blockSelect.innerHTML = '<option value="">All Blocks</option>';
-    
-    // Add district options
-    Array.from(districts).sort().forEach(district => {
-        const option = document.createElement('option');
-        option.value = district;
-        option.textContent = district;
-        districtSelect.appendChild(option);
-    });
-    
-    // Add block options
-    Array.from(blocks).sort().forEach(block => {
-        const option = document.createElement('option');
-        option.value = block;
-        option.textContent = block;
-        blockSelect.appendChild(option);
-    });
-}
 
 // Apply filters and search
 function applyFilters() {
     const searchCode = document.getElementById('searchEmployeeCode').value.trim().toLowerCase();
-    const filterDistrict = document.getElementById('filterDistrict').value;
-    const filterBlock = document.getElementById('filterBlock').value;
     
     const container = document.getElementById('recordsTable');
     
     // Filter employees
-    // Check if search is active
-        const isSearchActive = searchCode.length > 0;
-        const isFilterActive = filterDistrict || filterBlock;
-
         const filtered = employees.filter(emp => {
-                    // If search is active, ONLY search by employee code
-                    if (isSearchActive) {
-                                    return emp.employeeId.toLowerCase().includes(searchCode);
-                                }
-
-                    // If district/block filters are active, apply them
-                    if (isFilterActive) {
-                                    const matchesDistrict = !filterDistrict || emp.district === filterDistrict;
-                                    const matchesBlock = !filterBlock || emp.block === filterBlock;
-                                    return matchesDistrict && matchesBlock;
-                                }
-
-                    // If no filters active, show all
-                    return true;
-
+                            if (!searchCode) {
+                                            return true; // Show all if no search
+                                        }
+                    return emp.employeeId.toLowerCase().includes(searchCode););
+                    
     
     if(filtered.length === 0) {
         container.innerHTML = '<p class="text-center text-muted">No records found</p>';
@@ -320,19 +271,6 @@ function applyFilters() {
 // Add event listeners for search and filters
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchEmployeeCode');
-    const districtFilter = document.getElementById('filterDistrict');
-    const blockFilter = document.getElementById('filterBlock');
-    
-    if(searchInput) {
-        searchInput.addEventListener('input', applyFilters);
-    }
-    if(districtFilter) {
-        districtFilter.addEventListener('change', applyFilters);
-    }
-    if(blockFilter) {
-        blockFilter.addEventListener('change', applyFilters);
-    }
-    
     // Load employees and initialize
     loadEmployees();
 });
@@ -357,8 +295,6 @@ async function loadFromGoogleSheet() {
             // Display the records
             displayRecords();
                             updateTotalConsent();
-                            populateFilters();
-                            applyFilters();
         }
     } catch (error) {
         console.error('Error loading from Google Sheet:', error);
