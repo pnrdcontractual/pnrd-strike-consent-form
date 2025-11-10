@@ -205,7 +205,7 @@ function displayRecords() {
         html += '<td>' + emp.designation + '</td>';
         html += '<td>' + emp.employeeId + '</td>';
         html += '<td>' + emp.agreement + '</td>';
-        html += '<td>' + (emp.signature && emp.signature.startsWith('http') ? '<img src="' + emp.signature + '" alt="Signature" style="max-width:80px;max-height:60px;">' : 'N/A') + '</td>';
+        html += '<td>' + (emp.signature && emp.signature.startsWith('http') ? '<img src="' + (emp.signature.includes('uc?export=view') ? emp.signature + (emp.signature.includes('confirm=') ? '' : '&confirm=t') : emp.signature) + '" alt="Signature" style="max-width:80px;max-height:60px;">' : 'N/A') + '</td>';
         html += '</tr>';
     });
     
