@@ -22,12 +22,6 @@
             <p class="text-center mb-4">We, the undersigned, agree and sign in support of the upcoming democratic agitation to be undertaken by the "All Assam Panchayat and Rural Development Contractual Employees Council" for our Demands.</p>
             
             <form id="employeeForm" class="card p-4 mb-4 shadow-sm">
-                                    <!-- Total Consent Counter -->
-                                    <div class="row mb-3">
-                                                                <div class="col-12 text-center">
-                                                                                                <h5 class="text-primary">Total Consent Given: <span id="totalConsent">0</span></h5>
-                                                                                            </div>
-                                                            </div>
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">SL No<span class="text-danger">*</span></label>
                     <div class="col-sm-9">
@@ -100,12 +94,8 @@
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">Signature (Camera)<span class="text-danger">*</span></label>
                     <div class="col-sm-9">
-                                                        <div class="btn-group mb-2" role="group">
-                                                                                                <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('fileInput').click()">📁 Choose File</button>
-                                    <button type="button" class="btn btn-outline-success" onclick="document.getElementById('cameraInput').click()">📷 Use Camera</button>
-                                </div>
-                                <input type="file" id="fileInput" accept="image/*" class="d-none" onchange="handleSignatureUpload(this)">
-                                <input type="file" id="cameraInput" accept="image/*" capture="environment" class="d-none" onchange="handleSignatureUpload(this)">
+                        <input type="file" id="signature" accept="image/*" capture="environment" class="form-control" required>
+                        <div id="imagePreview" class="mt-2"></div>
                     </div>
                 </div>
                 
@@ -119,13 +109,7 @@
         <!-- Records Display Section -->
         <div id="recordsSection">
             <h4 class="text-center mb-3 d-print-none">Employee Records</h4>
-                        <!-- Search and Filter Section -->
-                        <div class="row mb-3">
-                                            <div class="col-12">
-                                                                    <label class="form-label">Search by Employee Code:</label>
-                                                                    <input type="text" id="searchEmployeeCode" class="form-control" placeholder="Enter Employee Code">
-                                                                </div>
-                                             class="btn btn-success mb-3 d-print-none">Print Records</button>
+            <button onclick="window.print()" class="btn btn-success mb-3 d-print-none">Print Records</button>
             <div id="recordsTable" class="table-responsive"></div>
         </div>
     </div>
