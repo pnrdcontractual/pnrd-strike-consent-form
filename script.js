@@ -1,3 +1,4 @@
+190
 // REPLACE_WITH_YOUR_GOOGLE_APPS_SCRIPT_URL
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx4LL551l8bUnykANPuSr5n3wVnwknSzQJnDEu8uWfVxsD_WMZgOPemYuT5xsPkuIUh/exec';
 
@@ -204,7 +205,7 @@ function displayRecords() {
         html += '<td>' + emp.designation + '</td>';
         html += '<td>' + emp.employeeId + '</td>';
         html += '<td>' + emp.agreement + '</td>';
-        html += '<td><img src="' + emp.signature + '" alt="Signature"></td>';
+        html += '<td>' + (emp.signature && emp.signature.startsWith('http') ? '<img src="' + emp.signature + '" alt="Signature" style="max-width:80px;max-height:60px;">' : 'N/A') + '</td>';
         html += '</tr>';
     });
     
