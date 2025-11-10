@@ -219,6 +219,110 @@ function displayRecords() {
     
     html += '</tbody></table>';
     container.innerHTML = html;
+
+    // Update total consent counter
+function updateTotalConsent() {
+    const total = employees.length + 248;
+    document.getElementById('totalConsent').textContent = total;
+}
+
+// Populate filter dropdowns with unique values
+function populateFilters() {
+    const districts = new Set();
+    const blocks = new Set();
+    
+    employees.forEach(emp => {
+        districts.add(emp.district);
+        blocks.add(emp.block);
+    });
+    
+    const districtSelect = document.getElementById('filterDistrict');
+    const blockSelect = document.getElementById('filterBlock');
+    
+    // Clear existing options except "All"
+    districtSelect.innerHTML = '<option value="">All Districts</option>';
+    blockSelect.innerHTML = '<option value="">All Blocks</option>';
+    
+    // Add district options
+    Array.from(districts).sort().forEach(district => {
+        const option = document.createElement('option');
+        option.value = district;
+        option.textContent = district;
+        districtSelect.appendChild(option);
+    });
+    
+    // Add block options
+    Array.from(blocks).sort().forEach(block => {
+        const option = document.createElement('option');
+        option.value = block;
+        option.textContent = block;
+        blockSelect.appendChild(option);
+    });
+}
+
+// Apply filters and search
+function applyFilters() {
+    const searchCode = document.getElementById('searchEmployeeCode').value.trim().toLowerCase();
+    const filterDistrict = document.getElementById('filterDistrict').value;
+    const filterBlock = document.getElementById('filterBlock').value;
+    
+    const container = document.getElementById('recordsTable');
+    
+    // Filter employees
+    const filtered = employees.filter(emp => {
+        const matchesSearch = !searchCode || emp.employeeId.toLowerCase().includes(searchCode);
+        const matchesDistrict = !filterDistrict || emp.district === filterDistrict;
+        const matchesBlock = !filterBlock || emp.block === filterBlock;
+        return matchesSearch && matchesDistrict && matchesBlock;
+    });
+    
+    if(filtered.length === 0) {
+        container.innerHTML = '<p class="text-center text-muted">No records found</p>';
+        return;
+    }
+    
+    let html = '<table class="table table-bordered"><thead><tr>';
+    html += '<th>SL No</th><th>District</th><th>Block</th><th>Name</th>';
+    html += '<th>Designation</th><th>Employee ID</th><th>Agreement</th><th>Signature</th>';
+    html += '</tr></thead><tbody>';
+    
+    filtered.forEach(emp => {
+        html += '<tr>';
+        html += '<td>' + emp.slNo + '</td>';
+        html += '<td>' + emp.district + '</td>';
+        html += '<td>' + emp.block + '</td>';
+        html += '<td>' + emp.name + '</td>';
+        html += '<td>' + emp.designation + '</td>';
+        html += '<td>' + emp.employeeId + '</td>';
+        html += '<td>' + emp.agreement + '</td>';
+        html += '<td><img src="' + emp.signature + '" alt="Signature"></td>';
+        html += '</tr>';
+    });
+    
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+// Add event listeners for search and filters
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchEmployeeCode');
+    const districtFilter = document.getElementById('filterDistrict');
+    const blockFilter = document.getElementById('filterBlock');
+    
+    if(searchInput) {
+        searchInput.addEventListener('input', applyFilters);
+    }
+    if(districtFilter) {
+        districtFilter.addEventListener('change', applyFilters);
+    }
+    if(blockFilter) {
+        blockFilter.addEventListener('change', applyFilters);
+    }
+    
+    // Load employees and initialize
+    loadEmployees();
+});
+    
 }
 
         // Fetch employee records from Google Sheet
@@ -238,6 +342,9 @@ async function loadFromGoogleSheet() {
             
             // Display the records
             displayRecords();
+                            updateTotalConsent();
+                            populateFilters();
+                            applyFilters();
         }
     } catch (error) {
         console.error('Error loading from Google Sheet:', error);
